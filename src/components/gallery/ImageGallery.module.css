@@ -1,0 +1,17 @@
+.gallery {
+  width: 100%;
+}
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 16px;
+  padding: 0;
+}
+.item {
+  width: calc((100% - 48px) / 4);
+}
+.item:hover {
+  transform: scale(1.1);
+}
