@@ -7,7 +7,7 @@ import { ImageModal } from '../ImageModal/ImageModal';
 import { MoonLoader } from 'react-spinners';
 import { ErrorMessage } from '../ErrorMessage/ErrorMesage';
 import Modal from 'react-modal';
-import { fetchImages } from '../../api/fun-api';
+import { fetchData } from '../../api/fun-api'; 
 
 Modal.setAppElement('#root');
 
@@ -46,26 +46,23 @@ function App() {
   };
 
   useEffect(() => {
-    if (!query) {
-      return;
-    }
+    if (!query) return;
 
-    async function fetchData() {
+    async function fetchDataFromAPI() {
       try {
         setIsLoading(true);
-        const response = await fetchImages(query, page);
-
-        setImgData((prevImgData) => [...prevImgData, ...response.results]);
-        setTotelPages(response.total_pages);
+        const { data } = await fetchData(query, page); // 👈 отримуємо поле `data`
+        setImgData((prevImgData) => [...prevImgData, ...data.results]); // 👈 правильний доступ
+        setTotelPages(data.total_pages);
       } catch (error) {
-        console.log('error:', error.message);
+        console.error('error:', error.message);
         setIsError(true);
       } finally {
         setIsLoading(false);
       }
     }
 
-    fetchData();
+    fetchDataFromAPI();
   }, [page, query]);
 
   return (
@@ -91,6 +88,7 @@ function App() {
           }}
         />
       )}
+
       {isModalOpen && (
         <ImageModal
           image={modalData}
