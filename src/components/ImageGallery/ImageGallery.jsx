@@ -23,4 +23,5 @@ const ImageGallery = ({ photos, openModal, bottomRef }) => {
     </div>
   );
 };
+
 export default ImageGallery;
