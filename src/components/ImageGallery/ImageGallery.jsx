@@ -11,7 +11,7 @@ const ImageGallery = ({ photos, openModal, bottomRef }) => {
           return (
             <li className={css.item} key={photo.id}>
               <ImageCard
-                card={photo}
+                card={photo} 
                 openModal={openModal}
                 bottomRef={bottomRef}
                 isLast={isLast}

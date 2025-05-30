@@ -17,7 +17,7 @@ function App() {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [totalPages, setTotelPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
 
@@ -36,7 +36,7 @@ function App() {
   const submitForm = (newQuery) => {
     if (!newQuery.trim()) return;
     setPage(1);
-    setTotelPages(1);
+    setTotalPages(1);
     setIsError(false);
     setQuery(newQuery);
     setImgData([]);
@@ -52,9 +52,9 @@ function App() {
     async function fetchDataFromAPI() {
       try {
         setIsLoading(true);
-        const { data } = await fetchData(query, page);
+        const data = await fetchData(query, page); 
         setImgData((prevImgData) => [...prevImgData, ...data.results]);
-        setTotelPages(data.total_pages);
+        setTotalPages(data.total_pages);
       } catch (error) {
         console.error('error:', error.message);
         setIsError(true);
@@ -72,7 +72,7 @@ function App() {
 
       {!isError ? (
         imgData.length > 0 ? (
-          <ImageGallery photos={imgData} openModal={openModalImage} />
+          <ImageGallery photos={imgData} openModal={openModalImage} /> 
         ) : (
           query && !isLoading && <p style={{ textAlign: 'center' }}>No results found for "{query}"</p>
         )
@@ -104,5 +104,6 @@ function App() {
 }
 
 export default App;
+
 
 
