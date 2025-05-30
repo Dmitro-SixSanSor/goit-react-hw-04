@@ -72,7 +72,7 @@ function App() {
 
       {!isError ? (
         imgData.length > 0 ? (
-          <ImageGallery imageGallery={imgData} onClickImage={openModalImage} />
+          <ImageGallery photos={imgData} openModal={openModalImage} />
         ) : (
           query && !isLoading && <p style={{ textAlign: 'center' }}>No results found for "{query}"</p>
         )
@@ -104,4 +104,5 @@ function App() {
 }
 
 export default App;
+
 
