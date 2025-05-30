@@ -6,7 +6,8 @@ export default function SearchBar({ onSubmit }) {
   const initialValues = {
     query: '',
   };
-  const handelSubmit = ({ query }, helpers) => {
+
+  const handleSubmit = ({ query }, helpers) => {
     if (query.trim() === '') {
       toast('Please, input your query');
       return;
@@ -14,9 +15,10 @@ export default function SearchBar({ onSubmit }) {
     onSubmit(query);
     helpers.resetForm();
   };
+
   return (
     <header className={styles.header}>
-      <Formik initialValues={initialValues} onSubmit={handelSubmit}>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form className={styles.form}>
           <Field
             className={styles.input}

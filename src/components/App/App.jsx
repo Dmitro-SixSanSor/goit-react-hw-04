@@ -7,7 +7,7 @@ import { ImageModal } from '../ImageModal/ImageModal';
 import { MoonLoader } from 'react-spinners';
 import { ErrorMessage } from '../ErrorMessage/ErrorMesage';
 import Modal from 'react-modal';
-import { fetchData } from '../../api/fun-api'; 
+import { fetchData } from '../../api/fun-api';
 
 Modal.setAppElement('#root');
 
@@ -34,6 +34,7 @@ function App() {
   };
 
   const submitForm = (newQuery) => {
+    if (!newQuery.trim()) return;
     setPage(1);
     setTotelPages(1);
     setIsError(false);
@@ -51,8 +52,8 @@ function App() {
     async function fetchDataFromAPI() {
       try {
         setIsLoading(true);
-        const { data } = await fetchData(query, page); // 👈 отримуємо поле `data`
-        setImgData((prevImgData) => [...prevImgData, ...data.results]); // 👈 правильний доступ
+        const { data } = await fetchData(query, page);
+        setImgData((prevImgData) => [...prevImgData, ...data.results]);
         setTotelPages(data.total_pages);
       } catch (error) {
         console.error('error:', error.message);
@@ -70,14 +71,16 @@ function App() {
       <SearchBar onSubmit={submitForm} />
 
       {!isError ? (
-        imgData.length > 0 && (
+        imgData.length > 0 ? (
           <ImageGallery imageGallery={imgData} onClickImage={openModalImage} />
+        ) : (
+          query && !isLoading && <p style={{ textAlign: 'center' }}>No results found for "{query}"</p>
         )
       ) : (
         <ErrorMessage message={'Something went wrong...'} />
       )}
 
-      {totalPages > page && <LoadMoreBtn onClick={onChange} />}
+      {totalPages > page && !isLoading && <LoadMoreBtn onClick={onChange} />}
 
       {isLoading && (
         <MoonLoader
@@ -101,3 +104,4 @@ function App() {
 }
 
 export default App;
+
